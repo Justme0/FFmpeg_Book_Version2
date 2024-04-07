@@ -100,7 +100,10 @@ int DemuxThread::decode_loop()
             }
 
             if (stream_index >= 0) {
-                seek_target= av_rescale_q(seek_target, AVRational{1, AV_TIME_BASE}, is->formatCtx->streams[stream_index]->time_base);
+                AVRational avr;
+                avr.num = 1;
+                avr.den = AV_TIME_BASE;
+                seek_target= av_rescale_q(seek_target, avr, is->formatCtx->streams[stream_index]->time_base);
             }
 
             if (av_seek_frame(is->formatCtx, stream_index, seek_target, is->seek_flags) < 0) {

@@ -1,5 +1,8 @@
 #include "RenderView.h"
 
+#include <cassert>
+#include "log.h"
+
 #define SDL_WINDOW_DEFAULT_WIDTH  (1280)
 #define SDL_WINDOW_DEFAULT_HEIGHT (720)
 
@@ -41,7 +44,7 @@ int RenderView::initSDL()
         return -1;
     }
 
-    m_sdlRender = SDL_CreateRenderer(m_sdlWindow, -1, SDL_RENDERER_ACCELERATED);
+    m_sdlRender = SDL_CreateRenderer(m_sdlWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!m_sdlRender) {
         return -2;
     }
@@ -83,15 +86,18 @@ void RenderView::updateTexture(RenderItem *item, unsigned char *pixelData, int r
 
     std::list<RenderItem *>::iterator iter;
     SDL_RenderClear(m_sdlRender);
+    assert(m_items.size() == 1);
     for (iter = m_items.begin(); iter != m_items.end(); iter++)
     {
         RenderItem *item = *iter;
         SDL_RenderCopy(m_sdlRender, item->texture, &item->srcRect, &item->dstRect);
+        SDL_RenderPresent(m_sdlRender);
     }
 
     m_updateMutex.unlock();
 }
 
+// no use
 void RenderView::onRefresh()
 {
     m_updateMutex.lock();

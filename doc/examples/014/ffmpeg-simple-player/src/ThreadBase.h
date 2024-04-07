@@ -19,7 +19,7 @@ private:
     std::thread *m_th = nullptr;
 
 protected:
-    std::atomic<bool> m_stop = false;
+    std::atomic<bool> m_stop ;
 };
 
 #endif // THREADBASE_H

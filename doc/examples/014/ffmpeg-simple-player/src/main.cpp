@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+#include <chrono>
+#include <thread>
+
 #ifdef __cplusplus
 extern "C" {
 #include <libavutil/avassert.h>
@@ -35,11 +38,15 @@ struct RenderPairData
 static void FN_DecodeImage_Cb(unsigned char* data, int w, int h, void *userdata)
 {
     RenderPairData *cbData = (RenderPairData*)userdata;
+
+    // assign once
     if (!cbData->item) {
         cbData->item = cbData->view->createRGB24Texture(w, h);
     }
 
+    ff_log_line("update texture");
     cbData->view->updateTexture(cbData->item, data, h);
+    // std::this_thread::sleep_for(std::chrono::seconds(10));
 }
 
 int main(int argc, char **argv)
@@ -49,15 +56,18 @@ int main(int argc, char **argv)
         return -1;
     }
 
+    av_log_set_level(AV_LOG_VERBOSE);
+
     SDLApp a;
 
     // render video
     RenderView view;
     view.initSDL();
 
-    Timer ti;
-    std::function<void()> cb = bind(&RenderView::onRefresh, &view);
-    ti.start(&cb, 30);
+    // Timer ti;
+    // std::function<void()> cb = bind(&RenderView::onRefresh, &view);
+    // const int kRenderPresentMs = 10;
+    // ti.start(&cb, kRenderPresentMs);
 
     RenderPairData *cbData = new RenderPairData;
     cbData->view = &view;

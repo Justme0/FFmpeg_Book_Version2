@@ -23,6 +23,7 @@ Timer::Timer()
 
 }
 
+// interval is MS
 void Timer::start(void *cb, int interval)
 {
     // timer has started.

@@ -8,7 +8,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = 
 CFLAGS        = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES) -std=gnu++17
 INCPATH       = -I. $(FF_INC) $(SDL_INC)
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f

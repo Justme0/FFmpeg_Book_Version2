@@ -82,8 +82,8 @@ struct FFmpegPlayerCtx {
     int64_t          seek_pos;
 
     // flush flag for seek
-    std::atomic<bool> flush_actx = false;
-    std::atomic<bool> flush_vctx = false;
+    std::atomic<bool> flush_actx ;
+    std::atomic<bool> flush_vctx ;
 
     // for sync
     double          audio_clock = 0.0;
@@ -94,9 +94,9 @@ struct FFmpegPlayerCtx {
 
     // picture queue
     VideoPicture    pictq[VIDEO_PICTURE_QUEUE_SIZE];
-    std::atomic<int>             pictq_size = 0;
-    std::atomic<int>             pictq_rindex = 0;
-    std::atomic<int>             pictq_windex = 0;
+    std::atomic<int>             pictq_size ;
+    std::atomic<int>             pictq_rindex ;
+    std::atomic<int>             pictq_windex ;
     SDL_mutex       *pictq_mutex = nullptr;
     SDL_cond        *pictq_cond = nullptr;
 
@@ -105,7 +105,7 @@ struct FFmpegPlayerCtx {
     SwsContext      *sws_ctx = nullptr;
     SwrContext      *swr_ctx = nullptr;
 
-    std::atomic<int> pause = UNPAUSE;
+    std::atomic<int> pause ;
 
     // image callback
     Image_Cb        imgCb = nullptr;
@@ -171,7 +171,7 @@ private:
     FFmpegPlayerCtx playerCtx;
     std::string m_filePath;
     SDL_AudioSpec audio_wanted_spec;
-    std::atomic<bool> m_stop = false;
+    std::atomic<bool> m_stop ;
 
 private:
     DemuxThread *m_demuxThread = nullptr;

@@ -26,7 +26,7 @@ public:
 
 private:
     std::list<AVPacket> pkts;
-    std::atomic<int> size = 0;
+    std::atomic<int> size;
     SDL_mutex *mutex = nullptr;
     SDL_cond *cond = nullptr;
 };
